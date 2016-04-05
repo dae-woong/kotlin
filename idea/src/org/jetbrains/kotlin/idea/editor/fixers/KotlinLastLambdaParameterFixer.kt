@@ -16,6 +16,7 @@
 
 package org.jetbrains.kotlin.idea.editor.fixers
 
+import com.intellij.codeInsight.editorActions.smartEnter.SmartEnterProcessor
 import com.intellij.lang.SmartEnterProcessorWithFixers
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiElement
@@ -49,7 +50,7 @@ class KotlinLastLambdaParameterFixer : SmartEnterProcessorWithFixers.Fixer<Kotli
 
                 doc.insertString(offset, "{ }")
                 processor.registerUnresolvedError(offset + 2)
-                processor.commit(editor)
+                SmartEnterProcessor.commit(editor)
             }
         }
     }
