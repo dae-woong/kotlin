@@ -46,6 +46,7 @@ import org.jetbrains.kotlin.idea.refactoring.KotlinRefactoringBundle
 import org.jetbrains.kotlin.idea.refactoring.changeSignature.*
 import org.jetbrains.kotlin.idea.refactoring.introduce.*
 import org.jetbrains.kotlin.idea.refactoring.introduce.extractionEngine.*
+import org.jetbrains.kotlin.idea.refactoring.runSynchronouslyWithProgress
 import org.jetbrains.kotlin.idea.references.mainReference
 import org.jetbrains.kotlin.idea.util.IdeDescriptorRenderers
 import org.jetbrains.kotlin.idea.util.application.executeCommand
@@ -274,7 +275,9 @@ open class KotlinIntroduceParameterHandler(
                 }
 
         val occurrencesToReplace = if (expression is KtProperty) {
-            ReferencesSearch.search(expression).mapNotNullTo(SmartList(expression.toRange())) { it.element?.toRange() }
+            project.runSynchronouslyWithProgress("Searching '${expression.name}' usages", true) {
+                ReferencesSearch.search(expression).mapNotNullTo(SmartList(expression.toRange())) { it.element?.toRange() }
+            } ?: emptyList()
         }
         else {
             expression.toRange()
@@ -407,14 +410,16 @@ private fun findInternalUsagesOfParametersAndReceiver(
         targetDescriptor: FunctionDescriptor
 ): MultiMap<KtElement, KtElement> {
     val usages = MultiMap<KtElement, KtElement>()
-    targetParent.getValueParameters()
-            .filter { !it.hasValOrVar() }
-            .forEach {
-                val paramUsages = ReferencesSearch.search(it).map { it.element as KtElement }
-                if (paramUsages.isNotEmpty()) {
-                    usages.put(it, paramUsages)
+    targetParent.project.runSynchronouslyWithProgress("Searching usages of '${targetParent.name}' parameters", true) {
+        targetParent.getValueParameters()
+                .filter { !it.hasValOrVar() }
+                .forEach {
+                    val paramUsages = ReferencesSearch.search(it).map { it.element as KtElement }
+                    if (paramUsages.isNotEmpty()) {
+                        usages.put(it, paramUsages)
+                    }
                 }
-            }
+    }
     val receiverTypeRef = (targetParent as? KtFunction)?.receiverTypeReference
     if (receiverTypeRef != null) {
         targetParent.acceptChildren(
