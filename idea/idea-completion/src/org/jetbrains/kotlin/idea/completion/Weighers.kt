@@ -31,17 +31,21 @@ import org.jetbrains.kotlin.idea.core.completion.DeclarationLookupObject
 import org.jetbrains.kotlin.idea.core.completion.PackageLookupObject
 import org.jetbrains.kotlin.idea.resolve.ResolutionFacade
 import org.jetbrains.kotlin.idea.util.CallType
-import org.jetbrains.kotlin.idea.util.FuzzyType
 import org.jetbrains.kotlin.idea.util.toFuzzyType
 import org.jetbrains.kotlin.resolve.descriptorUtil.parentsWithSelf
 import org.jetbrains.kotlin.resolve.findOriginalTopMostOverriddenDescriptors
 
-object PriorityWeigher : LookupElementWeigher("kotlin.priority") {
+abstract class KotlinLookupElementWeigher(id: String) : LookupElementWeigher(id) {
+    // To avoid generation of default toString() in implementing objects
+    final override fun toString() = super.toString()
+}
+
+object PriorityWeigher : KotlinLookupElementWeigher("kotlin.priority") {
     override fun weigh(element: LookupElement, context: WeighingContext)
             = element.getUserData(ITEM_PRIORITY_KEY) ?: ItemPriority.DEFAULT
 }
 
-class NotImportedWeigher(private val classifier: ImportableFqNameClassifier) : LookupElementWeigher("kotlin.notImported") {
+class NotImportedWeigher(private val classifier: ImportableFqNameClassifier) : KotlinLookupElementWeigher("kotlin.notImported") {
     private enum class Weight {
         default,
         siblingImported,
@@ -62,7 +66,7 @@ class NotImportedWeigher(private val classifier: ImportableFqNameClassifier) : L
     }
 }
 
-class NotImportedStaticMemberWeigher(private val classifier: ImportableFqNameClassifier) : LookupElementWeigher("kotlin.notImportedMember") {
+class NotImportedStaticMemberWeigher(private val classifier: ImportableFqNameClassifier) : KotlinLookupElementWeigher("kotlin.notImportedMember") {
     override fun weigh(element: LookupElement): Comparable<*>? {
         if (element.getUserData(ITEM_PRIORITY_KEY) != ItemPriority.STATIC_MEMBER) return null
         val fqName = (element.`object` as DeclarationLookupObject).importableFqName ?: return null
@@ -70,7 +74,7 @@ class NotImportedStaticMemberWeigher(private val classifier: ImportableFqNameCla
     }
 }
 
-class ImportedWeigher(private val classifier: ImportableFqNameClassifier) : LookupElementWeigher("kotlin.imported") {
+class ImportedWeigher(private val classifier: ImportableFqNameClassifier) : KotlinLookupElementWeigher("kotlin.imported") {
     private enum class Weight {
         currentPackage,
         defaultImport,
@@ -99,12 +103,12 @@ object KotlinLookupElementProximityWeigher : CompletionWeigher() {
     }
 }
 
-object SmartCompletionPriorityWeigher : LookupElementWeigher("kotlin.smartCompletionPriority") {
+object SmartCompletionPriorityWeigher : KotlinLookupElementWeigher("kotlin.smartCompletionPriority") {
     override fun weigh(element: LookupElement, context: WeighingContext)
             = element.getUserData(SMART_COMPLETION_ITEM_PRIORITY_KEY) ?: SmartCompletionItemPriority.DEFAULT
 }
 
-object KindWeigher : LookupElementWeigher("kotlin.kind") {
+object KindWeigher : KotlinLookupElementWeigher("kotlin.kind") {
     private enum class Weight {
         enumMember,
         callable,
@@ -135,11 +139,11 @@ object KindWeigher : LookupElementWeigher("kotlin.kind") {
     }
 }
 
-object CallableWeigher : LookupElementWeigher("kotlin.callableWeight") {
+object CallableWeigher : KotlinLookupElementWeigher("kotlin.callableWeight") {
     override fun weigh(element: LookupElement) = element.getUserData(CALLABLE_WEIGHT_KEY)
 }
 
-object VariableOrFunctionWeigher : LookupElementWeigher("kotlin.variableOrFunction"){
+object VariableOrFunctionWeigher : KotlinLookupElementWeigher("kotlin.variableOrFunction"){
     private enum class Weight {
         variable,
         function
@@ -155,7 +159,7 @@ object VariableOrFunctionWeigher : LookupElementWeigher("kotlin.variableOrFuncti
     }
 }
 
-object DeprecatedWeigher : LookupElementWeigher("kotlin.deprecated") {
+object DeprecatedWeigher : KotlinLookupElementWeigher("kotlin.deprecated") {
     override fun weigh(element: LookupElement): Int {
         val o = element.`object` as? DeclarationLookupObject ?: return 0
         return if (o.isDeprecated) 1 else 0
@@ -285,14 +289,14 @@ class PreferContextElementsWeigher(private val context: DeclarationDescriptor) :
     }
 }
 
-object ByNameAlphabeticalWeigher : LookupElementWeigher("kotlin.byNameAlphabetical") {
+object ByNameAlphabeticalWeigher : KotlinLookupElementWeigher("kotlin.byNameAlphabetical") {
     override fun weigh(element: LookupElement): String? {
         val lookupObject = element.`object` as? DeclarationLookupObject ?: return null
         return lookupObject.name?.asString()
     }
 }
 
-object PreferLessParametersWeigher : LookupElementWeigher("kotlin.preferLessParameters") {
+object PreferLessParametersWeigher : KotlinLookupElementWeigher("kotlin.preferLessParameters") {
     override fun weigh(element: LookupElement): Int? {
         val lookupObject = element.`object` as? DeclarationLookupObject ?: return null
         val function = lookupObject.descriptor as? FunctionDescriptor ?: return null

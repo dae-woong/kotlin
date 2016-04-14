@@ -246,7 +246,7 @@ class ParameterNameAndTypeCompletion(
         val REPLACEMENT_OFFSET = OffsetKey.create("ParameterNameAndTypeCompletion.REPLACEMENT_OFFSET")
     }
 
-    object Weigher : LookupElementWeigher("kotlin.parameterNameAndTypePriority") {
+    object Weigher : KotlinLookupElementWeigher("kotlin.parameterNameAndTypePriority") {
         override fun weigh(element: LookupElement, context: WeighingContext): Int = element.getUserData(PRIORITY_KEY) ?: 0
     }
 }

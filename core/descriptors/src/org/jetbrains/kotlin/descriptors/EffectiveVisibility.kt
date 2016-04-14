@@ -16,15 +16,13 @@
 
 package org.jetbrains.kotlin.descriptors
 
+import org.jetbrains.kotlin.descriptors.EffectiveVisibility.*
+import org.jetbrains.kotlin.descriptors.RelationToType.ARGUMENT
+import org.jetbrains.kotlin.descriptors.RelationToType.CONSTRUCTOR
 import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.types.KotlinType
-import org.jetbrains.kotlin.descriptors.EffectiveVisibility.*
-import org.jetbrains.kotlin.descriptors.RelationToType.*
 
-sealed class EffectiveVisibility(val name: String, val publicApi: Boolean = false, val privateApi: Boolean = false) {
-
-    override fun toString() = name
-
+sealed class EffectiveVisibility(val publicApi: Boolean = false, val privateApi: Boolean = false) {
     //                    Public
     //                /--/   |  \-------------\
     // Protected(Base)       |                 \
@@ -38,25 +36,29 @@ sealed class EffectiveVisibility(val name: String, val publicApi: Boolean = fals
     //                           Private = Local
 
 
-    object Private : EffectiveVisibility("private", privateApi = true) {
+    object Private : EffectiveVisibility(privateApi = true) {
+        override fun toString() = "private"
+
         override fun relation(other: EffectiveVisibility) =
                 if (this == other || Local == other) Permissiveness.SAME else Permissiveness.LESS
     }
 
     // Effectively same as Private
-    object Local : EffectiveVisibility("local") {
+    object Local : EffectiveVisibility() {
+        override fun toString() = "local"
+
         override fun relation(other: EffectiveVisibility) =
                 if (this == other || Private == other) Permissiveness.SAME else Permissiveness.LESS
     }
 
-    object Public : EffectiveVisibility("public", publicApi = true) {
+    object Public : EffectiveVisibility(publicApi = true) {
+        override fun toString() = "public"
+
         override fun relation(other: EffectiveVisibility) =
                 if (this == other) Permissiveness.SAME else Permissiveness.MORE
     }
 
-    abstract class InternalOrPackage protected constructor(internal: Boolean) : EffectiveVisibility(
-            if (internal) "internal" else "public/*package*/"
-    ) {
+    abstract class InternalOrPackage protected constructor() : EffectiveVisibility() {
         override fun relation(other: EffectiveVisibility) = when (other) {
             Public -> Permissiveness.LESS
             Private, Local, InternalProtectedBound, is InternalProtected -> Permissiveness.MORE
@@ -72,12 +74,15 @@ sealed class EffectiveVisibility(val name: String, val publicApi: Boolean = fals
         }
     }
 
-    object Internal : InternalOrPackage(true)
+    object Internal : InternalOrPackage() {
+        override fun toString() = "internal"
+    }
 
-    object PackagePrivate : InternalOrPackage(false)
+    object PackagePrivate : InternalOrPackage() {
+        override fun toString() = "public/*package*/"
+    }
 
-    class Protected(val container: ClassDescriptor?) : EffectiveVisibility("protected", publicApi = true) {
-
+    class Protected(val container: ClassDescriptor?) : EffectiveVisibility(publicApi = true) {
         override fun equals(other: Any?) = (other is Protected && container == other.container)
 
         override fun hashCode() = container?.hashCode() ?: 0
@@ -113,7 +118,9 @@ sealed class EffectiveVisibility(val name: String, val publicApi: Boolean = fals
     }
 
     // Lower bound for all protected visibilities
-    object ProtectedBound : EffectiveVisibility("protected (in different classes)", publicApi = true) {
+    object ProtectedBound : EffectiveVisibility(publicApi = true) {
+        override fun toString() = "protected (in different classes)"
+
         override fun relation(other: EffectiveVisibility) = when (other) {
             Public, is Protected -> Permissiveness.LESS
             Private, Local, InternalProtectedBound -> Permissiveness.MORE
@@ -129,8 +136,7 @@ sealed class EffectiveVisibility(val name: String, val publicApi: Boolean = fals
     }
 
     // Lower bound for internal and protected(C)
-    class InternalProtected(val container: ClassDescriptor?): EffectiveVisibility("internal & protected") {
-
+    class InternalProtected(val container: ClassDescriptor?): EffectiveVisibility() {
         override fun equals(other: Any?) = (other is InternalProtected && container == other.container)
 
         override fun hashCode() = container?.hashCode() ?: 0
@@ -162,7 +168,9 @@ sealed class EffectiveVisibility(val name: String, val publicApi: Boolean = fals
     }
 
     // Lower bound for internal and protected lower bound
-    object InternalProtectedBound : EffectiveVisibility("internal & protected (in different classes)") {
+    object InternalProtectedBound : EffectiveVisibility() {
+        override fun toString() = "internal & protected (in different classes)"
+
         override fun relation(other: EffectiveVisibility) = when (other) {
             Public, is Protected, is InternalProtected, ProtectedBound, is InternalOrPackage -> Permissiveness.LESS
             Private, Local -> Permissiveness.MORE
