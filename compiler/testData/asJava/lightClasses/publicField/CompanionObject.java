@@ -8,5 +8,7 @@ public final class C {
 
     public static final class Companion {
         private Companion() { /* compiled code */ }
+
+        public java.lang.String toString() { /* compiled code */ }
     }
 }

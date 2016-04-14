@@ -11,6 +11,6 @@ object Z2 : Z {
 
 fun box() : String {
     val size = Class.forName("Z2").declaredMethods.size
-    if (size != 0) return "fail: $size"
+    if (size != 1 /* 'toString()' */) return "fail: $size"
     return "OK"
 }

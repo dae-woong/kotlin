@@ -6,7 +6,8 @@
 		"members": [
 			{"visibility": "private",	"declaration": "constructor ObjPublic()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LPublicClass$ObjPublic;"},
-			{"visibility": "public",	"declaration": "object ObjPublic", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "public",	"declaration": "object ObjPublic", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -16,7 +17,8 @@
 		"members": [
 			{"visibility": "private",	"declaration": "constructor ObjInternal()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LPublicClass$ObjInternal;"},
-			{"visibility": "internal",	"declaration": "object ObjInternal", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "internal",	"declaration": "object ObjInternal", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -26,7 +28,8 @@
 		"members": [
 			{"visibility": "private",	"declaration": "constructor ObjProtected()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LPublicClass$ObjProtected;"},
-			{"visibility": "protected",	"declaration": "object ObjProtected", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "protected",	"declaration": "object ObjProtected", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -36,7 +39,8 @@
 		"members": [
 			{"visibility": "private",	"declaration": "constructor ObjPrivate()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LPublicClass$ObjPrivate;"},
-			{"visibility": "private",	"declaration": "object ObjPrivate", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "private",	"declaration": "object ObjPrivate", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -113,7 +117,8 @@
 		"class": "PublicClass$Companion",
 		"members": [
 			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "()V"},
-			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"}
+			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -132,7 +137,8 @@
 		"class": "InternalClass$Companion",
 		"members": [
 			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "()V"},
-			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"}
+			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -151,7 +157,8 @@
 		"class": "InternalClassInternalCompanion$Companion",
 		"members": [
 			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "()V"},
-			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"}
+			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -170,7 +177,8 @@
 		"class": "InternalClassPrivateCompanion$Companion",
 		"members": [
 			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "()V"},
-			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"}
+			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -190,7 +198,8 @@
 		"members": [
 			{"visibility": "private",	"declaration": "constructor ObjPublic()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LPrivateClass$ObjPublic;"},
-			{"visibility": "public",	"declaration": "object ObjPublic", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "public",	"declaration": "object ObjPublic", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -200,7 +209,8 @@
 		"members": [
 			{"visibility": "private",	"declaration": "constructor ObjInternal()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LPrivateClass$ObjInternal;"},
-			{"visibility": "internal",	"declaration": "object ObjInternal", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "internal",	"declaration": "object ObjInternal", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -210,7 +220,8 @@
 		"members": [
 			{"visibility": "private",	"declaration": "constructor ObjProtected()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LPrivateClass$ObjProtected;"},
-			{"visibility": "protected",	"declaration": "object ObjProtected", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "protected",	"declaration": "object ObjProtected", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -220,7 +231,8 @@
 		"members": [
 			{"visibility": "private",	"declaration": "constructor ObjPrivate()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LPrivateClass$ObjPrivate;"},
-			{"visibility": "private",	"declaration": "object ObjPrivate", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "private",	"declaration": "object ObjPrivate", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -297,7 +309,8 @@
 		"class": "PrivateClass$Companion",
 		"members": [
 			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "()V"},
-			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"}
+			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -316,7 +329,8 @@
 		"class": "PrivateClassInternalCompanion$Companion",
 		"members": [
 			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "()V"},
-			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"}
+			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -335,7 +349,8 @@
 		"class": "PrivateClassPrivateCompanion$Companion",
 		"members": [
 			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "()V"},
-			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"}
+			{"visibility": "private",	"declaration": "constructor Companion()", "name": "<init>", "desc": "(Lkotlin/jvm/internal/DefaultConstructorMarker;)V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{

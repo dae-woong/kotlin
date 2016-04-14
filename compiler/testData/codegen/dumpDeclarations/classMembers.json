@@ -113,7 +113,8 @@
 			{"visibility": "private",	"declaration": "final var privateVar: kotlin.Any?", "name": "privateVar", "desc": "Ljava/lang/Object;"},
 			{"visibility": "private",	"declaration": "constructor ObjectWithProperties()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LObjectWithProperties;"},
-			{"visibility": "public",	"declaration": "object ObjectWithProperties", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "public",	"declaration": "object ObjectWithProperties", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -127,7 +128,8 @@
 			{"visibility": "internal",	"declaration": "final var internalVar: kotlin.Long", "name": "internalVar", "desc": "J"},
 			{"visibility": "private",	"declaration": "constructor ObjectWithFields()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LObjectWithFields;"},
-			{"visibility": "public",	"declaration": "object ObjectWithFields", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "public",	"declaration": "object ObjectWithFields", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	},
 	{
@@ -152,7 +154,8 @@
 			{"visibility": "private",	"declaration": "const final val privateConst: kotlin.Int", "name": "privateConst", "desc": "I"},
 			{"visibility": "private",	"declaration": "constructor ObjectWithConst()", "name": "<init>", "desc": "()V"},
 			{"name": "INSTANCE", "desc": "LObjectWithConst;"},
-			{"visibility": "public",	"declaration": "object ObjectWithConst", "name": "<clinit>", "desc": "()V"}
+			{"visibility": "public",	"declaration": "object ObjectWithConst", "name": "<clinit>", "desc": "()V"},
+			{"visibility": "public",	"declaration": "open fun toString(): kotlin.String", "name": "toString", "desc": "()Ljava/lang/String;"}
 		]
 	}
 ]

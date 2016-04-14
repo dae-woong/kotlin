@@ -11,5 +11,7 @@ public interface TraitClassObjectField {
         private final java.lang.String getY() { /* compiled code */ }
 
         private Companion() { /* compiled code */ }
+
+        public java.lang.String toString() { /* compiled code */ }
     }
 }

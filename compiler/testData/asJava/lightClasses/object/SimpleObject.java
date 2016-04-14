@@ -14,4 +14,6 @@ public final class A {
     public final int f() { /* compiled code */ }
 
     private A() { /* compiled code */ }
+
+    public java.lang.String toString() { /* compiled code */ }
 }

@@ -379,6 +379,8 @@ public class ImplementationBodyCodegen extends ClassBodyCodegen {
 
         generateFunctionsForDataClasses();
 
+        generateToStringForObject();
+
         new CollectionStubMethodGenerator(state, descriptor, functionCodegen, v).generate();
 
         generateToArray();
@@ -800,6 +802,28 @@ public class ImplementationBodyCodegen extends ClassBodyCodegen {
         ConstructorDescriptor constructor = classDescriptor.getUnsubstitutedPrimaryConstructor();
         assert constructor != null : "Data class must have primary constructor: " + classDescriptor;
         return constructor;
+    }
+
+    private void generateToStringForObject() {
+        if (!isObject(descriptor)) return;
+
+        SimpleFunctionDescriptor toString = CollectionsKt.singleOrNull(
+                descriptor.getUnsubstitutedMemberScope().getContributedFunctions(Name.identifier("toString"), NoLookupLocation.FROM_BACKEND)
+        );
+        if (toString == null) return;
+
+        if (toString.getModality() == Modality.FINAL || toString.getKind().isReal()) return;
+
+        MethodVisitor mv = v.newMethod(
+                JvmDeclarationOriginKt.OtherOrigin(myClass, toString), ACC_PUBLIC, toString.getName().asString(),
+                "()Ljava/lang/String;", null, null
+        );
+        if (state.getClassBuilderMode() != ClassBuilderMode.FULL) return;
+
+        mv.visitCode();
+        mv.visitLdcInsn(descriptor.getName().asString());
+        mv.visitInsn(ARETURN);
+        FunctionCodegen.endVisit(mv, "toString() for object", myClass);
     }
 
     private void generateEnumMethods() {
